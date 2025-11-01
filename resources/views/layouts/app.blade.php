@@ -20,9 +20,11 @@
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-aqua shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-white">
-                        {{ $header }}
+                <header class="bg-gradient-to-r from-gray-800 to-gray-900 shadow-lg">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <div class="text-white">
+                            {{ $header }}
+                        </div>
                     </div>
                 </header>
             @endisset

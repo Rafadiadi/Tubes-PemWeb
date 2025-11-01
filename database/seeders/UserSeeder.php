@@ -13,39 +13,133 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Admin User
-        User::create([
-            'name' => 'Admin Healthcare',
-            'email' => 'admin@healthcare.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-            'phone' => '081234567890',
-            'email_verified_at' => now(),
-        ]);
+        $this->command->info('🌱 Seeding Users...');
+        
+        // Create Admin Users
+        $admins = [
+            ['name' => 'Admin', 'email' => 'admin@example.com', 'password' => 'password123'],
+            ['name' => 'Admin Healthcare', 'email' => 'admin@healthcare.com', 'password' => 'password'],
+            ['name' => 'Super Admin', 'email' => 'superadmin@example.com', 'password' => 'password'],
+        ];
 
-        // Create Dokter User
-        User::create([
-            'name' => 'Dr. John Doe',
-            'email' => 'dokter@healthcare.com',
-            'password' => Hash::make('password'),
-            'role' => 'dokter',
-            'phone' => '081234567891',
-            'email_verified_at' => now(),
-        ]);
+        foreach ($admins as $admin) {
+            User::create([
+                'name' => $admin['name'],
+                'email' => $admin['email'],
+                'password' => Hash::make($admin['password']),
+                'role' => 'admin',
+                'email_verified_at' => now(),
+                'created_at' => now()->subDays(rand(200, 365)),
+                'updated_at' => now()->subDays(rand(0, 10)),
+            ]);
+        }
+        $this->command->info('✅ Created ' . count($admins) . ' admins');
 
-        // Create Pasien User
-        User::create([
-            'name' => 'Jane Smith',
-            'email' => 'pasien@healthcare.com',
-            'password' => Hash::make('password'),
-            'role' => 'pasien',
-            'phone' => '081234567892',
-            'email_verified_at' => now(),
-        ]);
+        // Create Doctor Users with varied registration dates
+        $doctors = [
+            ['name' => 'Dr. Ahmad Fadli', 'email' => 'ahmad.fadli@hospital.com', 'specialty' => 'Cardiologist'],
+            ['name' => 'Dr. Budi Santoso', 'email' => 'budi.santoso@hospital.com', 'specialty' => 'Pediatrician'],
+            ['name' => 'Dr. Citra Dewi', 'email' => 'citra.dewi@hospital.com', 'specialty' => 'Dermatologist'],
+            ['name' => 'Dr. Dian Pertiwi', 'email' => 'dian.pertiwi@hospital.com', 'specialty' => 'Neurologist'],
+            ['name' => 'Dr. Eko Prasetyo', 'email' => 'eko.prasetyo@hospital.com', 'specialty' => 'Orthopedic'],
+            ['name' => 'Dr. Fitri Handayani', 'email' => 'fitri.handayani@hospital.com', 'specialty' => 'Ophthalmologist'],
+            ['name' => 'Dr. Gani Kurniawan', 'email' => 'gani.kurniawan@hospital.com', 'specialty' => 'General Practitioner'],
+            ['name' => 'Dr. Hani Wijaya', 'email' => 'hani.wijaya@hospital.com', 'specialty' => 'Psychiatrist'],
+            ['name' => 'Dr. Indra Gunawan', 'email' => 'indra.gunawan@hospital.com', 'specialty' => 'Surgeon'],
+            ['name' => 'Dr. Joko Susilo', 'email' => 'joko.susilo@hospital.com', 'specialty' => 'Dentist'],
+            ['name' => 'Dr. Kartika Sari', 'email' => 'kartika.sari@hospital.com', 'specialty' => 'Gynecologist'],
+            ['name' => 'Dr. Lina Marlina', 'email' => 'lina.marlina@hospital.com', 'specialty' => 'ENT Specialist'],
+            ['name' => 'Dr. Michael Chen', 'email' => 'michael.chen@hospital.com', 'specialty' => 'Radiologist'],
+            ['name' => 'Dr. Nita Anggraini', 'email' => 'nita.anggraini@hospital.com', 'specialty' => 'Anesthesiologist'],
+            ['name' => 'Dr. Omar Abdullah', 'email' => 'omar.abdullah@hospital.com', 'specialty' => 'Urologist'],
+        ];
 
-        // Create more sample users
-        User::factory(10)->create([
-            'role' => 'pasien',
-        ]);
+        foreach ($doctors as $index => $doctor) {
+            // Distribute doctor registration across 6 months
+            $daysAgo = rand(30, 180);
+            User::create([
+                'name' => $doctor['name'],
+                'email' => $doctor['email'],
+                'password' => Hash::make('password'),
+                'role' => 'doctor',
+                'email_verified_at' => now()->subDays($daysAgo),
+                'created_at' => now()->subDays($daysAgo),
+                'updated_at' => now()->subDays(rand(0, 30)),
+            ]);
+        }
+        $this->command->info('✅ Created ' . count($doctors) . ' doctors');
+
+        // Create Patient Users with realistic distribution
+        $patientNames = [
+            'Agus Setiawan', 'Bambang Wijaya', 'Cindy Lestari', 'Dewi Kusuma', 'Edi Supriyanto',
+            'Farah Diba', 'Guntur Prakoso', 'Hendra Wibowo', 'Ika Putri', 'Jaka Sembung',
+            'Kiki Amalia', 'Lisa Maharani', 'Mulyadi Pratama', 'Nina Sari', 'Oka Mahendra',
+            'Putri Maharani', 'Qori Sandioriva', 'Rina Susanti', 'Siti Fatimah', 'Tono Wijaya',
+            'Umi Kalsum', 'Vina Panduwinata', 'Wawan Setiawan', 'Xena Wulandari', 'Yanti Kusuma',
+            'Zainal Abidin', 'Andi Rahman', 'Bella Safira', 'Candra Kirana', 'Dedi Mulyadi',
+            'Erni Susilowati', 'Fajar Nugroho', 'Gita Gutawa', 'Hadi Permana', 'Irma Yunita',
+            'Johan Sebastian', 'Kartini Muljadi', 'Luthfi Halim', 'Maya Nurmalasari', 'Nanda Rizky',
+            'Olivia Nathania', 'Putra Mahendra', 'Qomar Zaman', 'Raka Pradipta', 'Sari Dewi',
+            'Taufik Hidayat', 'Udin Sedunia', 'Vera Agustina', 'Willy Dozan', 'Yuda Pratama',
+            'Ahmad Zaki', 'Bayu Saputra', 'Clara Gopa', 'Dimas Anggara', 'Eva Arnaz',
+            'Farel Prayoga', 'Gisella Anastasia', 'Hafiz Faisal', 'Intan Paramadina', 'Julia Perez',
+            'Katon Bagaskara', 'Lesti Kejora', 'Mawar Hitam', 'Novi Kurnia', 'Oscar Lawalata',
+            'Prilly Latuconsina', 'Rafi Ahmad', 'Syahrini', 'Titi DJ', 'Ussy Sulistiawaty',
+            'Vicky Prasetyo', 'Wulan Guritno', 'Yuni Shara', 'Zaskia Gotik', 'Ariel Noah',
+            'Bunga Citra', 'Cita Citata', 'Dewi Sandra', 'Ely Sugigi', 'Fanny Fabriana',
+            'Gracia Indri', 'Hotman Paris', 'Iis Dahlia', 'Judika Sihotang', 'Krisdayanti',
+            'Luna Maya', 'Maia Estianty', 'Nikita Mirzani', 'Olga Syahputra', 'Pasha Ungu',
+        ];
+
+        // Create patients with varied registration dates (more recent registrations)
+        foreach ($patientNames as $index => $name) {
+            // More patients registered recently (last 6 months)
+            $daysAgo = $this->getRealisticRegistrationDate($index, count($patientNames));
+            
+            User::create([
+                'name' => $name,
+                'email' => strtolower(str_replace(' ', '.', $name)) . '@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'patient',
+                'email_verified_at' => now()->subDays($daysAgo),
+                'created_at' => now()->subDays($daysAgo),
+                'updated_at' => now()->subDays(rand(0, min($daysAgo, 30))),
+            ]);
+        }
+        $this->command->info('✅ Created ' . count($patientNames) . ' patients');
+
+        // Summary
+        $this->command->info('');
+        $this->command->info('📊 Summary:');
+        $this->command->table(
+            ['Role', 'Count'],
+            [
+                ['Admin', User::where('role', 'admin')->count()],
+                ['Doctor', User::where('role', 'doctor')->count()],
+                ['Patient', User::where('role', 'patient')->count()],
+                ['Total', User::count()],
+            ]
+        );
+    }
+
+    /**
+     * Get realistic registration date with more recent registrations
+     */
+    private function getRealisticRegistrationDate($index, $total)
+    {
+        // 40% registered in last month
+        if ($index < $total * 0.4) {
+            return rand(1, 30);
+        }
+        // 30% registered in last 2-3 months
+        if ($index < $total * 0.7) {
+            return rand(31, 90);
+        }
+        // 20% registered in last 3-6 months
+        if ($index < $total * 0.9) {
+            return rand(91, 180);
+        }
+        // 10% registered more than 6 months ago
+        return rand(181, 365);
     }
 }
