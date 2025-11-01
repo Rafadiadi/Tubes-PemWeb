@@ -16,7 +16,7 @@ File-file berikut sudah dibuat untuk deployment Railway:
 - **Status**: ✅ Migrations sudah dijalankan
 
 ### Production (Railway):
-- **Database**: PostgreSQL (dari Railway)
+- **Database**: MySQL (dari Railway)
 - **Auto-connect**: Menggunakan environment variables Railway
 
 ---
@@ -52,11 +52,11 @@ git push origin main
 #### d. Configure Environment Variables
 
 Railway akan **auto-inject** database variables:
-- `PGHOST`
-- `PGPORT`
-- `PGDATABASE`
-- `PGUSER`
-- `PGPASSWORD`
+- `MYSQLHOST`
+- `MYSQLPORT`
+- `MYSQLDATABASE`
+- `MYSQLUSER`
+- `MYSQLPASSWORD`
 
 **Manual variables yang perlu ditambahkan:**
 
